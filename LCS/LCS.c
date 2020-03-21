@@ -1,7 +1,7 @@
   #include<stdio.h>
   #include<stdlib.h>
 void LCS(char arr1[],int len1,char arr2[],int len2);
-void printLCS(char arr1[],int** countarr,int** arrowarr,int row,int col);
+void printLCS(char arr1[],int row,int col,int countarr[][col],int arrowarr[][col]);
 
 int main(){
     int len1,len2;
@@ -32,8 +32,8 @@ int main(){
     return 0;
 }
 void LCS(char arr1[],int len1,char arr2[],int len2){
-    int countarr[len1+1][len2+1];
-    int arrowarr[len1+1][len2+1];
+    int countarr[50][50];
+    int arrowarr[50][50];
     for (int i = 0; i <= len1; i++){
         for (int j = 0; j <= len2; j++){
     //        printf("i: %d, j: %d\n",i,j);
@@ -78,20 +78,19 @@ void LCS(char arr1[],int len1,char arr2[],int len2){
         printf("\n");
     }
 
-    printLCS(arr1,countarr,arrowarr,len1,len2);
+    printLCS(arr1,len1+1,len2+1,countarr,arrowarr);
     return ;
 }
 
-void printLCS(char arr1[],int** countarr, int** arrowarr, int row,int col){
-    printf("row: %d col:%d",row,col);
-    if (row == 0 || col == 0) {return;}
+void printLCS(char arr1[],int row,int col,int countarr[][50], int arrowarr[][50]){
+	if (row == 0 || col == 0) {return;}
     if( arrowarr[row][col] == 0){
-        printLCS(arr1,countarr,arrowarr,row-1,col-1);
-        printf(" %c ",arr1[row]);
+        printLCS(arr1,row-1,col-1,countarr,arrowarr);
+        printf(" %c ",arr1[row-1]);
     }else if (arrowarr[row][col] == 1){
-        printLCS(arr1,countarr,arrowarr,row-1,col);
+        printLCS(arr1,row-1,col,countarr,arrowarr);
     }else{
-        printLCS(arr1,countarr,arrowarr,row,col-1);
+        printLCS(arr1,row,col-1,countarr,arrowarr);
     }
     printf("\n");
     return ;
